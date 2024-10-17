@@ -32,4 +32,5 @@ A brief description of JSON-Parser and its purpose.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
+   git clone git@github.com:Terry555/json-parser.git
+   Detailed steps for installation to be included here later!!
