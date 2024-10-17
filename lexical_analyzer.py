@@ -18,17 +18,16 @@ def tokenize(input_string):
 
                     i += 1
                 token = '<"' + word + '", STRING>'
-                print(string)
-                print(i)
-                print(string[i])
-
-                while string[i] in [":", " "] and i<len(string)-1:
-                    i += 1
+                '''identifier = False
+                print("lol")
+                while string[i] in [":", " ", '"'] and i<len(string)-1:
+                    print(string[i])
                     if string[i] == ":":
                         token = '<"' + word + '", IDENTIFIER>'
+                        identifier = True
                         break
+                    i += 1'''
                 tokens.append(token)
-
             elif char == ":":
                 tokens.append('<"' + char + '", OPERATOR>')
             elif char in "0123456789.":
@@ -48,8 +47,11 @@ def tokenize(input_string):
                     word = word + string[i]
                 if word == "true" or word == "false":
                     tokens.append('<"' + word + '", BOOLEAN>')
-                if word == "null":
+                elif word == "null":
                     tokens.append('<"' + word + '", NULL>')
+                else:
+                    print("Token not found: " + word)
+                    return
             elif char == "}" or string[i] == "}":
                 tokens.append('<"' + string[i] + '", CLOSEDCURLYBRACKET>')
             elif char == " " or char == "\n":
@@ -69,6 +71,6 @@ def tokenize(input_string):
 
 
 if __name__ == "__main__":
-    input = '{"type": "basket","beans": 47,"apples": 7,"oranges": null,"brand": "ConvertSimple","ratio": false, "descriptors": ["clean", "fresh", "juicy", "delicious" ]}'
+    input = '{"type": "basket", "beans": 47, "apples": 7, "oranges": 23, "brand": "ConvertSimple", "ratio": true, "fees": {"cleaning": "$4.50", "baking": "$27.30","commission": "$93.10"}, "descriptors": ["clean", "fresh", "juicy", "delicious"]}'
     #print(input)
     tokenize(input)
