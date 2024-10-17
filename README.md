@@ -22,10 +22,25 @@ A brief description of JSON-Parser and its purpose.
 
 - String: '"' ( '\\' . | ~[\\"] )* '"'
 - Number: [0-9]+ ( '.' [0-9]* )? | '.' [0-9]+
+- 
+![Number](images/number.png)
+  
 - Boolean: (true | false)
+  
+![Boolean](images/boolean.png)
+  
 - Null: null
+  
+![Null](images/null.png)
+  
 - Operator: ':'
-- Separator: (\, | | \{ | \} | \[ | \])
+  
+![Operator](images/operator.png)
+  
+- Separator: (\, | \{ | \} | \[ | \])
+  
+![Separator](images/separator.png)
+  
 <!-- Identifiers will become the keys in key/value pairs in JS and Python, which will likely have
 their own set of rules (eg. not starting with a number), but for this initial step we will treat all Identifiers
 as Strings -->
