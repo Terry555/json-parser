@@ -21,7 +21,7 @@ A brief description of JSON-Parser and its purpose.
 ## Token Types
 
 - String: '"' ( '\\' . | ~[\\"] )* '"'
-- Number: [0-9]+ ( '.' [0-9]+ )?
+- Number: [0-9]+ ( '.' [0-9]* )? | '.' [0-9]+
 - Boolean: (true | false)
 - Null: null
 - Operator: ':'
