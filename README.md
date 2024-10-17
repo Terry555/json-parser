@@ -20,13 +20,13 @@ A brief description of JSON-Parser and its purpose.
 
 ## Token Types
 
-- Identifier: '"' [a-zA-Z_][a-zA-Z0-9]* '"'
+- Identifier: '"' (^[A-Za-z_$][A-Za-z0-9_$]*$)|(^['"][^'"]*['"]$) '"'
 - String: '"' ( '\\' . | ~[\\"] )* '"'
 - Number: [0-9]+ ( '.' [0-9]+ )?
 - Boolean: (true | false)
 - Null: null
-- Operator: ( [+\-*/%] | [<>=!]=? | (&&|\|\|) )
-- Separator: (\, | \; | \{ | \} | \[ | \] | \( | \) )
+- Operator: ':'
+- Separator: (\, | \; | \{ | \} | \[ | \])
 
 ## Installation
 

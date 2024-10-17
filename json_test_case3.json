@@ -1,0 +1,14 @@
+{
+    "items": [
+        {
+            "product": "Laptop",
+            "price": 999.99,
+            "inStock": true
+        },
+        {
+            "product": "Smartphone",
+            "price": 599.99,
+            "inStock": false
+        }
+    ]
+}
