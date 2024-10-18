@@ -15,26 +15,37 @@ def tokenize(input_string):
                 i += 1 
                 while string[i] != char:
                     word = word + string[i]
-
+                    if string[i] == "\\":
+                        if string[i+1] == "\\" or string[i+1] == '"':
+                            word = word + string[i] + string[i+1]
+                            if i + 2 < len(string):
+                                i += 2
+                                continue
+                            else:
+                                break
+                        else:
+                            word = word + string[i]
+                            i += 1
+                            continue
                     i += 1
                 token = '<"' + word + '", STRING>'
-                '''identifier = False
-                print("lol")
-                while string[i] in [":", " ", '"'] and i<len(string)-1:
-                    print(string[i])
-                    if string[i] == ":":
-                        token = '<"' + word + '", IDENTIFIER>'
-                        identifier = True
-                        break
-                    i += 1'''
                 tokens.append(token)
             elif char == ":":
                 tokens.append('<"' + char + '", OPERATOR>')
             elif char in "0123456789.":
                 word = char
+                decimals = 0
+                if char == ".":
+                    decimals += 1
                 while string[i] in "0123456789." and i<len(string)-1:
                     i += 1
                     word = word + string[i]
+                    if string[i] == ".":
+                        decimals += 1
+                if decimals > 2:
+                    print("Token not found: " + word)
+                    print("\n")
+                    return
                 tokens.append('<"' + word + '", NUMBER>')
             elif char == '[':
                 tokens.append('<"[", OPENSQUAREBRACKET>')
@@ -44,13 +55,15 @@ def tokenize(input_string):
                 word = char
                 while string[i] in "abcdefghijklmnopqrstuvwxyz" and i<len(string)-1:
                     i += 1
-                    word = word + string[i]
+                    if string[i] not in [" ", "\n"]:
+                        word = word + string[i]
                 if word == "true" or word == "false":
                     tokens.append('<"' + word + '", BOOLEAN>')
                 elif word == "null":
                     tokens.append('<"' + word + '", NULL>')
                 else:
                     print("Token not found: " + word)
+                    print("\n")
                     return
             elif char == "}" or string[i] == "}":
                 tokens.append('<"' + string[i] + '", CLOSEDCURLYBRACKET>')
@@ -59,6 +72,7 @@ def tokenize(input_string):
                 continue
             else:
                 print("Token not found: " + char)
+                print("\n")
                 return
             i += 1
         if input_string.index(string) != len(input_string)-1:
@@ -67,6 +81,7 @@ def tokenize(input_string):
         #print(values)
     for token in tokens:
         print(token)
+    print("\n")
 
 
 
