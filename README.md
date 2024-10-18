@@ -21,11 +21,16 @@ A brief description of JSON-Parser and its purpose.
 ## Token Types
 
 - String: '"' ( '\\' . | ~[\\"] )* '"'
+<<<<<<< HEAD
+- Number: [0-9]+ ( '.' [0-9]* )? | '.' [0-9]+ 
+
+=======
 
 ![Number](images/string.png)
   
 - Number: [0-9]+ ( '.' [0-9]* )? | '.' [0-9]+
   
+>>>>>>> origin/main
 ![Number](images/number.png)
   
 - Boolean: (true | false)
