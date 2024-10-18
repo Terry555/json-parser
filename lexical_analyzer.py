@@ -1,4 +1,4 @@
-
+import os
 
 # Lexical Analysis
 def tokenize(input_string):
@@ -71,6 +71,11 @@ def tokenize(input_string):
 
 
 if __name__ == "__main__":
-    input = '{"type": "basket", "beans": 47, "apples": 7, "oranges": 23, "brand": "ConvertSimple", "ratio": true, "fees": {"cleaning": "$4.50", "baking": "$27.30","commission": "$93.10"}, "descriptors": ["clean", "fresh", "juicy", "delicious"]}'
-    #print(input)
-    tokenize(input)
+    path = "./test_cases"
+    for file in os.listdir(path):
+        if file.endswith(".json"):
+            file_path = os.path.join(path, file)
+        
+            with open(file_path, 'r') as json_file:
+                data = json_file.read()
+                tokenize(data)
