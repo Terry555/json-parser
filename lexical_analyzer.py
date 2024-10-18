@@ -87,6 +87,9 @@ def tokenize(input_string):
 
 if __name__ == "__main__":
     path = "./test_cases"
+    # Get the current working directory
+    current_directory = os.getcwd()
+    print(f"Current Directory: {current_directory}")
     for file in os.listdir(path):
         if file.endswith(".json"):
             file_path = os.path.join(path, file)

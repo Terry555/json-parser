@@ -1,6 +1,6 @@
 # JSON-Parser
 
-A brief description of JSON-Parser and its purpose.
+This is designed to take JSON files and parse them into tokens. 
 
 ## Table of Contents
 - [Team Members](#teammembers)
@@ -15,8 +15,7 @@ A brief description of JSON-Parser and its purpose.
 
 ## Features
 
-- List the main features of your project.
-- Highlight any important functionalities.
+- This is the beginning stages of what will be a JSON parser. As of now, the file "lexical_analyzer.py" accepts any number of .json files as arguments, and will tokenize each file. It will output each token according to the categories below. It will then state if the file passes or fails based on if the file only has valid tokens. 
 
 ## Token Types
 
@@ -59,4 +58,5 @@ as Strings -->
 1. Clone the repository:
    ```bash
    git clone git@github.com:Terry555/json-parser.git
-   Detailed steps for installation (matching the shell script file) to be included here later!!
+   If the user does not have python installed, detailed steps for installation are included in the shell script file "run_script.sh". 
+2. Run the file "lexical_analyzer.py", which at the moment accepts all .json files in the "test_cases" folder. 
