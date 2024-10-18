@@ -28,6 +28,10 @@ def tokenize(input_string):
                             i += 1
                             continue
                     i += 1
+                    if i == len(string):
+                        print("Token not found: " + '"' + word)
+                        print("\n")
+                        return
                 token = '<"' + word + '", STRING>'
                 tokens.append(token)
             elif char == ":":
@@ -42,7 +46,7 @@ def tokenize(input_string):
                     word = word + string[i]
                     if string[i] == ".":
                         decimals += 1
-                if decimals > 2:
+                if decimals > 1:
                     print("Token not found: " + word)
                     print("\n")
                     return
@@ -87,10 +91,13 @@ def tokenize(input_string):
 
 if __name__ == "__main__":
     path = "./test_cases"
+    file_num = 0
+    print("Note: The numbers in the pathnames of the files do not correspond to the order that they run below.")
     for file in os.listdir(path):
         if file.endswith(".json"):
             file_path = os.path.join(path, file)
-        
+            file_num += 1
+            print("Test " + str(file_num)+":")
             with open(file_path, 'r') as json_file:
                 data = json_file.read()
                 tokenize(data)
