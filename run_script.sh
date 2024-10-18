@@ -24,8 +24,8 @@ fi
 # Run the lexical_analyzer.py script using Docker with the JSON test files as arguments
 echo "Running lexical_analyzer.py with test files..."
 
-# Replace `your_docker_image` with the actual Docker image you intend to use
-docker run --rm -v "$(pwd):/app" your_docker_image python3 /app/lexical_analyzer.py /app/json_test_case1.json /app/json_test_case2.json
+# Replace `my-parser-app` with the actual Docker image you intend to use
+docker run --rm -v "$(pwd):/app" my-parser-app python3 /app/lexical_analyzer.py /app/json_test_case1.json /app/json_test_case2.json
 
 # Check if the script executed successfully
 if [ $? -eq 0 ]; then
