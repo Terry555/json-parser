@@ -1,3 +1,4 @@
 {
-    "message": "This is a backslash: \\\\"
+    123: "value",
+    "validKey": "value"
 }
