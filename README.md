@@ -20,16 +20,11 @@ This is designed to take JSON files and parse them into tokens.
 ## Token Types
 
 - String: '"' ( '\\' . | ~[\\"] )* '"'
-<<<<<<< HEAD
-- Number: [0-9]+ ( '.' [0-9]* )? | '.' [0-9]+ 
-
-=======
 
 ![Number](images/string.png)
   
 - Number: [0-9]+ ( '.' [0-9]* )? | '.' [0-9]+
   
->>>>>>> origin/main
 ![Number](images/number.png)
   
 - Boolean: (true | false)
