@@ -1,0 +1,109 @@
+Here are the expected outputs of the 13 test files: 
+
+Test File 1 json_test_case1.json:
+Object
+├── Pair
+│   ├── Key: "name"
+│   └── Value: "Alice"
+├── Pair
+│   ├── Key: "age"
+│   └── Value: 30
+├── Pair
+│   ├── Key: "isStudent"
+│   └── Value: false
+└── Pair
+    ├── Key: "email"
+    └── Value: null
+
+Test File 2 json_test_case2.json:
+Object
+├── Pair
+│   ├── Key: "employee"
+│   └── Value: Object
+│       ├── Pair
+│       │   ├── Key: "id"
+│       │   └── Value: 101
+│       ├── Pair
+│       │   ├── Key: "name"
+│       │   └── Value: "Bob"
+│       ├── Pair
+│       │   ├── Key: "address"
+│       │   └── Value: Object
+│       │       ├── Pair
+│       │       │   ├── Key: "street"
+│       │       │   └── Value: "123 Main St"
+│       │       ├── Pair
+│       │       │   ├── Key: "city"
+│       │       │   └── Value: "New York"
+│       └── Pair
+│           ├── Key: "skills"
+│           └── Value: Array
+│               ├── "JavaScript"
+│               ├── "React"
+│               └── "Node.js"
+
+Test File 3 json_test_case3.json:
+Object
+├── Pair
+│   ├── Key: "items"
+│   └── Value: Array
+│       ├── Object
+│       │   ├── Pair
+│       │   │   ├── Key: "product"
+│       │   │   └── Value: "Laptop"
+│       │   ├── Pair
+│       │   │   ├── Key: "price"
+│       │   │   └── Value: 999.99
+│       │   └── Pair
+│       │       ├── Key: "inStock"
+│       │       └── Value: true
+│       └── Object
+│           ├── Pair
+│           │   ├── Key: "product"
+│           │   └── Value: "Smartphone"
+│           ├── Pair
+│           │   ├── Key: "price"
+│           │   └── Value: 599.99
+│           └── Pair
+│               ├── Key: "inStock"
+│               └── Value: false
+
+Test File 4 json_test_case4.json:
+Object
+├── Pair
+│   ├── Key: "title"
+│   └── Value: "A \"Quote\" in a Title"
+├── Pair
+│   ├── Key: "description"
+│   └── Value: "This is a string with a newline character.\nAnd this is on a new line."
+└── Pair
+    ├── Key: "path"
+    └── Value: "C:\\Users\\Alice\\Documents"
+
+Test File 5 json_test_case5.json:
+Fails
+
+Test File 6 json_test_case6.json:
+Fails
+
+Test File 7 json_test_case7.json:
+Fails
+
+Test File 8 json_test_case8.json:
+Fails
+
+Test File 9 json_test_case9.json:
+Fails
+
+Test File 10 json_test_case10.json:
+Fails
+
+Test File 11 json_test_case11.json:
+Fails
+
+Test File 12 json_test_case12.json:
+Fails
+
+Test File 13 json_test_case13.json:
+Fails
+

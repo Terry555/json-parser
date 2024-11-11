@@ -1,36 +1,49 @@
 #!/bin/bash
 
 # Check if Python is installed
-if command -v python3 &>/dev/null; then
-    echo "Python is already installed."
-else
+if ! command -v python3 &>/dev/null; then
     echo "Python is not installed. Installing Python..."
-
-    # Update package lists
-    sudo apt update
-
-    # Install Python (This works for Debian-based systems; adjust as necessary)
-    sudo apt install -y python3 python3-pip
-
-    # Verify installation
-    if command -v python3 &>/dev/null; then
-        echo "Python installation completed successfully."
+    # For Ubuntu/Debian systems, install python3 and pip
+    if [ -f /etc/debian_version ]; then
+        sudo apt update
+        sudo apt install -y python3 python3-pip
+    # For Red Hat/CentOS systems, install python3 and pip
+    elif [ -f /etc/redhat-release ]; then
+        sudo yum install -y python3 python3-pip
     else
-        echo "Python installation failed. Please install it manually."
+        echo "Unsupported system for automatic Python installation. Please install Python manually."
         exit 1
     fi
+else
+    echo "Python is already installed."
 fi
 
-# Run Docker `my-parser-app`
-docker run --rm -v "$(pwd):/app" my-parser-app python3 /app/lexical_analyzer.py
+# Check if pip is installed
+if ! command -v pip3 &>/dev/null; then
+    echo "pip is not installed. Installing pip..."
+    sudo apt install -y python3-pip
+fi
 
-# Run the lexical_analyzer.py script using Docker with the JSON test files as arguments
-echo "Running lexical_analyzer.py with test files..."
+# Ensure the program's requirements are installed (if any)
+# If you have any Python dependencies, this is where you'd list them
+# Example: If you have a `requirements.txt`, you can install dependencies like so:
+if [ -f "requirements.txt" ]; then
+    echo "Installing Python dependencies from requirements.txt..."
+    pip3 install -r requirements.txt
+fi
 
-# Check if the script executed successfully
-if [ $? -eq 0 ]; then
-    echo "lexical_analyzer.py executed successfully."
-else
-    echo "An error occurred while executing lexical_analyzer.py."
+# Check if the user provided a .json file as an argument
+if [ -z "$1" ]; then
+    echo "Usage: $0 <json-file>"
     exit 1
 fi
+
+# Ensure the provided .json file exists
+if [ ! -f "$1" ]; then
+    echo "File '$1' not found!"
+    exit 1
+fi
+
+# Run your program (assuming it's located in the same directory)
+echo "Running the JSON parser on '$1'..."
+python3 syntactic_analyzer.py "$1"

@@ -54,4 +54,5 @@ as Strings -->
    ```bash
    git clone git@github.com:Terry555/json-parser.git
    If the user does not have python installed, detailed steps for installation are included in the shell script file "run_script.sh". 
-2. Run the file "lexical_analyzer.py", which at the moment accepts all .json files in the "test_cases" folder. 
+2. Run the file "lexical_analyzer.py", which will output tokens and token types. 
+3. Run the file "syntactic_analyzer.py", which will output an abstract syntax tree. 
