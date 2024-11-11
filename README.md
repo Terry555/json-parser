@@ -48,6 +48,14 @@ their own set of rules (eg. not starting with a number), but for this initial st
 as Strings -->
 <!-- - Example Identifier: '"' (^[A-Za-z_$][A-Za-z0-9_$]*$)|(^['"][^'"]*['"]$) '"' -->
 
+## Grammar
+
+S → {} | [] | {A} | [C]
+A → <STRING>:B | <STRING>:B, A
+B → S | <STRING> | <NUMBER> | <BOOLEAN> | <NULL>
+C → B,C | B
+
+
 ## Installation
 
 1. Clone the repository:
