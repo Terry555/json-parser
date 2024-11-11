@@ -77,7 +77,7 @@ def tokenize(input_string):
             else:
                 print("Token not found: " + char)
                 print("\n")
-                return
+                return []
             i += 1
         if input_string.index(string) != len(input_string)-1:
             tokens.append('<",", SEPARATOR>')
@@ -86,6 +86,7 @@ def tokenize(input_string):
     for token in tokens:
         print(token)
     print("\n")
+    return tokens
 
 
 
@@ -100,4 +101,5 @@ if __name__ == "__main__":
             print("Test " + str(file_num)+":")
             with open(file_path, 'r') as json_file:
                 data = json_file.read()
-                tokenize(data)
+                tokens = tokenize(data)
+                
