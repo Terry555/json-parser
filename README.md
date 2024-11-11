@@ -50,9 +50,9 @@ as Strings -->
 
 ## Grammar
 
-S → {} | [] | {A} | [C]<br>
-A → <STRING>:B | <STRING>:B, A<br>
-B → S | <STRING> | <NUMBER> | <BOOLEAN> | <NULL><br>
+S → {} | [] | {A} | [C]  
+A → \<STRING\>:B | \<STRING\>:B, A  
+B → S | \<STRING\> | \<NUMBER\> | \<BOOLEAN\> | \<NULL\>  
 C → B,C | B
 
 
