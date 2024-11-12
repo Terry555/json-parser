@@ -1,22 +1,7 @@
+import os
+import lexical_analyzer as lex
 
-'''#Syntactic Analyzer
-def parse(tokens):
-    types = []
-    for token in tokens:
-        space = token.index(' ')
-        token_type = token[space+1:-1]
-        types.append(token_type)
-
-if __name__ == "__main__":
-    tokens = ['<"{", OPENCURLYBRACKET>', '<"name", STRING>', '<":", OPERATOR>', '<"Alice", STRING>', '<",", SEPARATOR>', '<"age", STRING>', '<":", OPERATOR>', '<"30", NUMBER>', '<",", SEPARATOR>', '<"isStudent", STRING>', '<":", OPERATOR>', '<"false", BOOLEAN>', '<",", SEPARATOR>', '<"email", STRING>', '<":", OPERATOR>', '<"null", NULL>', '<"}", CLOSEDCURLYBRACKET>']
-    parse(tokens)'''
-
-class ASTNode:
-    """Base class for all AST nodes."""
-    pass
-
-class ObjectNode(ASTNode):
-    """Represents a JSON object."""
+class ObjectNode():
     def __init__(self, items=None):
         self.items = items or []
 
@@ -30,8 +15,7 @@ class ObjectNode(ASTNode):
             pair.print_tree(f"{indent}    ", is_last_pair)
         print(f"{indent}}}")
 
-class ArrayNode(ASTNode):
-    """Represents a JSON array."""
+class ArrayNode():
     def __init__(self, elements=None):
         self.elements = elements or []
 
@@ -45,8 +29,8 @@ class ArrayNode(ASTNode):
             element.print_tree(f"{indent}    ", is_last_element)
         print(f"{indent}]")
 
-class PairNode(ASTNode):
-    """Represents a key-value pair in an object."""
+
+class PairNode():
     def __init__(self, key, value):
         self.key = key
         self.value = value
@@ -63,8 +47,7 @@ class PairNode(ASTNode):
         print(f"{indent}    :")
         self.value.print_tree(f"{indent}    ", True)
 
-class ValueNode(ASTNode):
-    """Represents a simple value (string, number, boolean, or null)."""
+class ValueNode():
     def __init__(self, value):
         self.value = value
 
@@ -78,83 +61,119 @@ class ValueNode(ASTNode):
             symbol = "├──"
         print(f"{indent}{symbol} \"{self.value}\"")
 
-# Token types
-LBRACE = 'LBRACE'
-RBRACE = 'RBRACE'
-LBRACKET = 'LBRACKET'
-RBRACKET = 'RBRACKET'
+OPENCURLYBRACKET = 'OPENCURLYBRACKET'
+CLOSEDCURLYBRACKET = 'CLOSEDCURLYBRACKET'
+OPENSQUAREBRACKET = 'OPENSQUAREBRACKET'
+CLOSEDSQUAREBRACKET = 'CLOSEDSQUAREBRACKET'
 STRING = 'STRING'
 NUMBER = 'NUMBER'
 BOOLEAN = 'BOOLEAN'
 NULL = 'NULL'
-COLON = 'COLON'
-COMMA = 'COMMA'
-EOF = 'EOF'
+OPERATOR = 'OPERATOR'
+SEPARATOR = 'SEPARATOR'
 
-# Parser class that builds the AST from the token stream
 class JSONParser:
     def __init__(self, tokens):
         self.tokens = []
         for token in tokens:
             quote = token.index('"')
-            space = token.index(' ')
-            token_value = token[quote:space-2]
+            space = token.rfind(" ")
+            token_value = token[quote+1:space-2]
             token_type = token[space+1:-1]
-            self.tokens.append((token_value, token_type))
+            self.tokens.append((token_type, token_value))
         self.pos = 0
+        self.message = ""
 
     def current_token(self):
-        """Get the current token."""
         return self.tokens[self.pos]
 
     def eat(self, token_type):
-        """Consume the current token if it matches the expected type."""
         if self.current_token()[0] == token_type:
             self.pos += 1
         else:
-            raise SyntaxError(f"Expected {token_type}, but found {self.current_token()[0]}")
+            if self.message == "":
+                self.message = "Invalid next token in sequence: " + str(self.current_token()[1]) + "\n" + \
+                    "Expected " + str(token_type) + ", but found " + self.current_token()[0] + "\n" + \
+                    "The given input is not a valid JSON file."
 
     def parse(self):
-        """Parse the token stream and build the AST."""
-        return self.s()
+        ast = self.s()
+        if self.pos != len(tokens):
+            if self.message == "":
+                self.message = "Invalid next token in sequence: " + str(self.current_token()[1]) + "\n" + \
+                    "Expected $, but found " + self.current_token()[0] + "\n" + \
+                    "The given input is not a valid JSON file."
+        if self.message != "":
+            print(self.message)
+            return self.message
+        return ast
 
     def s(self):
-        """S → {} | [] | {A} | [D]"""
+        """S → {} | [] | {A} | [C]"""
         token_type = self.current_token()[0]
         if token_type == "OPENCURLYBRACKET":
-            self.eat(LBRACE)
+            self.eat(OPENCURLYBRACKET)
             if self.current_token()[0] == "CLOSEDCURLYBRACKET":
-                self.eat(RBRACE)
+                self.eat(CLOSEDCURLYBRACKET)
                 return ObjectNode()
             else:
                 obj = ObjectNode(self.a())
-                self.eat(RBRACE)
+                self.eat(CLOSEDCURLYBRACKET)
                 return obj
         elif token_type == "OPENSQUAREBRACKET":
-            self.eat(LBRACKET)
+            self.eat(OPENSQUAREBRACKET)
             if self.current_token()[0] == "CLOSEDSQUAREBRACKET":
-                self.eat(RBRACKET)
+                self.eat(CLOSEDSQUAREBRACKET)
                 return ArrayNode()
             else:
                 arr = ArrayNode(self.d())
-                self.eat(RBRACKET)
+                if self.current_token()[0] != 'CLOSEDSQUAREBRACKET':
+                    if self.message == "":
+                        self.message = "Invalid next token in sequence: " + str(self.current_token()[1]) + "\n" + \
+                            "Expected CLOSEDSQUAREBRACKET, but found " + self.current_token()[0] + "\n" \
+                            "The given input is not a valid JSON file."
+                self.eat(CLOSEDSQUAREBRACKET)
                 return arr
         else:
-            raise SyntaxError(f"Unexpected token {self.current_token()[0]}")
+            if self.message == "":
+                self.message = "Invalid next token in sequence: " + str(self.current_token()[1]) + "\n" + \
+                    "Expected OPENCURLYBRACKET or OPENSQUAREBRACKET, but found " + self.current_token()[0] + "\n" + \
+                    "The given input is not a valid JSON file."
 
     def a(self):
         """A → <STRING>:B | <STRING>:B, A"""
         pairs = [self.pair()]
-        while self.current_token()[0] == COMMA:
-            self.eat(COMMA)
+        while self.current_token()[0] == "SEPARATOR":
+            self.eat(SEPARATOR)
+            if self.current_token()[0] != "STRING":
+                if self.message == "":
+                    self.message = "Invalid next token in sequence: " + str(self.current_token()[1]) + "\n" + \
+                        "Expected STRING, but found " + self.current_token()[0] + "\n" + \
+                        "The given input is not a valid JSON file."
             pairs.append(self.pair())
+
+        if self.current_token()[0] not in ['CLOSEDCURLYBRACKET', 'SEPARATOR']:
+            if self.message == "":
+                self.message = "Invalid next token in sequence: " + str(self.current_token()[1]) + "\n" + \
+                        "Expected SEPARATOR or CLOSEDCURLYBRACKET, but found " + self.current_token()[0] + "\n" + \
+                        "The given input is not a valid JSON file."
         return pairs
 
     def pair(self):
         """<STRING>:B"""
+        if self.current_token()[0] != STRING:
+            if self.message == "":
+                self.message = "Invalid next token in sequence: " + str(self.current_token()[1]) + "\n" + \
+                    "Expected STRING, but found " + self.current_token()[0] + "\n" + \
+                    "The given input is not a valid JSON file."
         key = self.current_token()[1]  # Assuming the token is (STRING, value)
         self.eat(STRING)
-        self.eat(COLON)
+        if self.current_token()[0] != OPERATOR:
+            if self.message == "":
+                self.message = "Invalid next token in sequence: " + str(self.current_token()[1]) + "\n" + \
+                    "Expected OPERATOR, but found " + self.current_token()[0] + "\n" + \
+                    "The given input is not a valid JSON file."
+        self.eat(OPERATOR)
         value = self.b()
         return PairNode(key, value)
 
@@ -163,67 +182,64 @@ class JSONParser:
         token_type = self.current_token()[0]
         if self.current_token()[0] == "OPENCURLYBRACKET" or self.current_token()[0] == "OPENSQUAREBRACKET":
             return self.s()
-        if token_type == STRING:
+        elif token_type == "STRING":
             value = self.current_token()[1]
             self.eat(STRING)
             return ValueNode(value)
-        elif token_type == NUMBER:
+        elif token_type == "NUMBER":
             value = self.current_token()[1]
             self.eat(NUMBER)
             return ValueNode(value)
-        elif token_type == BOOLEAN:
+        elif token_type == "BOOLEAN":
             value = self.current_token()[1]
             self.eat(BOOLEAN)
             return ValueNode(value)
-        elif token_type == NULL:
+        elif token_type == "NULL":
             self.eat(NULL)
-            return ValueNode(None)
+            return ValueNode("null")
         else:
-            raise SyntaxError(f"Unexpected token {self.current_token()[0]}")
-
-    def c(self):
-        """C → <STRING> | <NUMBER> | <BOOLEAN> | <NULL>"""
-        token_type = self.current_token()[0]
-        if token_type == STRING:
-            value = self.current_token()[1]
-            self.eat(STRING)
-            return ValueNode(value)
-        elif token_type == NUMBER:
-            value = self.current_token()[1]
-            self.eat(NUMBER)
-            return ValueNode(value)
-        elif token_type == BOOLEAN:
-            value = self.current_token()[1]
-            self.eat(BOOLEAN)
-            return ValueNode(value)
-        elif token_type == NULL:
-            self.eat(NULL)
-            return ValueNode(None)
-        else:
-            raise SyntaxError(f"Unexpected token {self.current_token()[0]}")
+            if self.message == "":
+                self.message = "Invalid next token in sequence: " + str(self.current_token()[1]) + "\n" + \
+                    "Expected OPENCURLYBRACKET, OPENSQUAREBRACKET, STRING, NUMBER, BOOLEAN, or NULL, but found " + self.current_token()[0] + \
+                    "The given input is not a valid JSON file."
 
     def d(self):
-        """D → B,D | B"""
+        # This was originally D but we consolidated the grammar, so it became C
+        """C → B,C | B"""
         elements = [self.b()]
-        while self.current_token()[0] == COMMA:
-            self.eat(COMMA)
+        while self.current_token()[0] == "SEPARATOR":
+            self.eat(SEPARATOR)
             elements.append(self.b())
         return elements
 
-# Example usage:
-# Assume tokens are passed as a list of tuples (token_type, token_value)
 
-tokens = [
-    (LBRACE, '{'),
-    (STRING, "name"), (COLON, ':'), (STRING, "John"),
-    (COMMA, ','),
-    (STRING, "age"), (COLON, ':'), (NUMBER, 30),
-    (RBRACE, '}'),
-    (EOF, None)
-]
+if __name__ == "__main__":
+    path = "./test_cases"
+    file_num = 0
+    print("Running JSON test cases in order: \n")
 
-parser = JSONParser(tokens)
-ast = parser.parse()
+    files = sorted(
+        [file for file in os.listdir(path) if file.endswith(".json")],
+        key=lambda x: int(x.split('case')[-1].split('.')[0])
+    )
+    for file in files:
+        if file.endswith(".json"):
+            file_path = os.path.join(path, file)
+            file_num += 1
+            print("Test " + str(file_num)+":")
+            with open(file_path, 'r') as json_file:
+                data = json_file.read()
+                tokens = lex.tokenize(data, print_output=False)
 
-# Print the tree structure
-ast.print_tree()
+                #print(tokens)
+
+                if tokens is None:
+                    print("Input failed lexical analysis. Syntactical analysis not performed.")
+
+                if tokens is not None:
+                    parser = JSONParser(tokens)
+                    ast = parser.parse()
+
+                    if type(ast) != str:
+                        ast.print_tree()
+                print("\n")
