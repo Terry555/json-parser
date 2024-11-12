@@ -81,29 +81,32 @@ Object
     └── Value: "C:\\Users\\Alice\\Documents"
 
 Test File 5 json_test_case5.json:
-Fails
+Fails syntactical analysis
 
 Test File 6 json_test_case6.json:
-Fails
+Fails syntactical analysis
 
 Test File 7 json_test_case7.json:
-Fails
+Fails syntactical analysis
 
 Test File 8 json_test_case8.json:
-Fails
+Object
+├── Pair
+│   ├── Key: "message"
+│   └── Value: "This is a backslash: \\\\\\"
 
 Test File 9 json_test_case9.json:
-Fails
+Fails syntactical analysis
 
 Test File 10 json_test_case10.json:
-Fails
+Fails lexical analysis. Syntactical analysis not performed.
 
 Test File 11 json_test_case11.json:
-Fails
+Fails lexical analysis. Syntactical analysis not performed.
 
 Test File 12 json_test_case12.json:
-Fails
+Fails lexical analysis. Syntactical analysis not performed.
 
 Test File 13 json_test_case13.json:
-Fails
+Fails lexical analysis. Syntactical analysis not performed.
 
