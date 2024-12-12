@@ -48,8 +48,9 @@ class PairNode():
         self.value.print_tree(f"{indent}    ", True)
 
 class ValueNode():
-    def __init__(self, value):
+    def __init__(self, value, type):
         self.value = value
+        self.type = type
 
     def __repr__(self):
         return f"ValueNode(value={self.value})"
@@ -186,18 +187,18 @@ class JSONParser:
         elif token_type == "STRING":
             value = self.current_token()[1]
             self.eat(STRING)
-            return ValueNode(value)
+            return ValueNode(value, STRING)
         elif token_type == "NUMBER":
             value = self.current_token()[1]
             self.eat(NUMBER)
-            return ValueNode(value)
+            return ValueNode(value, NUMBER)
         elif token_type == "BOOLEAN":
             value = self.current_token()[1]
             self.eat(BOOLEAN)
-            return ValueNode(value)
+            return ValueNode(value, BOOLEAN)
         elif token_type == "NULL":
             self.eat(NULL)
-            return ValueNode("null")
+            return ValueNode("null", NULL)
         else:
             if self.message == "":
                 self.message = "Invalid next token in sequence: " + str(self.current_token()[1]) + "\n" + \
