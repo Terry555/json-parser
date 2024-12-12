@@ -96,7 +96,7 @@ class JSONParser:
                     "Expected " + str(token_type) + ", but found " + self.current_token()[0] + "\n" + \
                     "The given input is not a valid JSON file."
 
-    def parse(self):
+    def parse(self, tokens, print_output=True):
         ast = self.s()
         if self.pos != len(tokens):
             if self.message == "":
@@ -104,7 +104,8 @@ class JSONParser:
                     "Expected $, but found " + self.current_token()[0] + "\n" + \
                     "The given input is not a valid JSON file."
         if self.message != "":
-            print(self.message)
+            if print_output:
+                print(self.message)
             return self.message
         return ast
 
@@ -238,7 +239,7 @@ if __name__ == "__main__":
 
                 if tokens is not None:
                     parser = JSONParser(tokens)
-                    ast = parser.parse()
+                    ast = parser.parse(tokens)
 
                     if type(ast) != str:
                         ast.print_tree()
