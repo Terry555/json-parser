@@ -92,5 +92,5 @@ if __name__ == "__main__":
                     else:
                         meaning = assign_meaning(ast)
                         print(meaning)
-                        # Here we can see the result of this method.
                 print("\n")
+                
