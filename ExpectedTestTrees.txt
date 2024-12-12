@@ -81,13 +81,13 @@ Object
     └── Value: "C:\\Users\\Alice\\Documents"
 
 Test File 5 json_test_case5.json:
-Fails syntactical analysis
+Fails syntactical analysis.
 
 Test File 6 json_test_case6.json:
-Fails syntactical analysis
+Fails syntactical analysis.
 
 Test File 7 json_test_case7.json:
-Fails syntactical analysis
+Fails syntactical analysis.
 
 Test File 8 json_test_case8.json:
 Object
@@ -96,7 +96,7 @@ Object
 │   └── Value: "This is a backslash: \\\\\\"
 
 Test File 9 json_test_case9.json:
-Fails syntactical analysis
+Fails syntactical analysis.
 
 Test File 10 json_test_case10.json:
 Fails lexical analysis. Syntactical analysis not performed.
@@ -110,3 +110,8 @@ Fails lexical analysis. Syntactical analysis not performed.
 Test File 13 json_test_case13.json:
 Fails lexical analysis. Syntactical analysis not performed.
 
+Test File 14 json_test_case14.json:
+Fails syntactical analysis.
+
+Test File 15 json_test_case15.json:
+Fails syntactical analysis.

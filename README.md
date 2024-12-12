@@ -81,5 +81,4 @@ C: Ensures that the rules for a JSON Array are followed.
    ```bash
    git clone git@github.com:Terry555/json-parser.git
    If the user does not have python installed, detailed steps for installation are included in the shell script file "run_script.sh". 
-2. Run the file "lexical_analyzer.py", which will output tokens and token types. 
-3. Run the file "syntactic_analyzer.py", which will output an abstract syntax tree. 
+2. Run the file "semantic_analyzer.py", (which itself runs lexical_analyzer.py to produce tokens and token types and syntactic_analyzer.py to produce an abstract syntax tree) which will output python code

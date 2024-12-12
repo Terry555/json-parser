@@ -46,4 +46,4 @@ fi
 
 # Run your program (assuming it's located in the same directory)
 echo "Running the JSON parser on '$1'..."
-python3 syntactic_analyzer.py "$1"
+python3 semantic_analyzer.py "$1"
