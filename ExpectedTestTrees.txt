@@ -112,6 +112,3 @@ Fails lexical analysis. Syntactical analysis not performed.
 
 Test File 14 json_test_case14.json:
 Fails lexical analysis. Syntactical analysis not performed.
-
-Test File 15 json_test_case15.json:
-Fails syntactical analysis.
