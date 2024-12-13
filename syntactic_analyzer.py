@@ -5,8 +5,9 @@ class ObjectNode():
     def __init__(self, items=None):
         self.items = items or []
 
-    def __repr__(self):
-        return f"ObjectNode(items={self.items})"
+    '''def __repr__(self):
+        return f"ObjectNode(items={self.items})"'''
+    # Dead-code elimination
 
     def print_tree(self, indent="", is_last=True):
         print(f"{indent}{{")
@@ -19,8 +20,9 @@ class ArrayNode():
     def __init__(self, elements=None):
         self.elements = elements or []
 
-    def __repr__(self):
-        return f"ArrayNode(elements={self.elements})"
+    '''def __repr__(self):
+        return f"ArrayNode(elements={self.elements})"'''
+    # Dead-code elimination
 
     def print_tree(self, indent="", is_last=True):
         print(f"{indent}[")
@@ -35,8 +37,9 @@ class PairNode():
         self.key = key
         self.value = value
 
-    def __repr__(self):
-        return f"PairNode(key={self.key}, value={self.value})"
+    '''def __repr__(self):
+        return f"PairNode(key={self.key}, value={self.value})"'''
+    # Dead-code elimination
 
     def print_tree(self, indent="", is_last=True):
         if is_last:
@@ -52,8 +55,9 @@ class ValueNode():
         self.value = value
         self.type = type
 
-    def __repr__(self):
-        return f"ValueNode(value={self.value})"
+    '''def __repr__(self):
+        return f"ValueNode(value={self.value})"'''
+    # Dead-code elimination
 
     def print_tree(self, indent="", is_last=True):
         if is_last:
@@ -114,18 +118,18 @@ class JSONParser:
         """S → {} | [] | {A} | [C]"""
         token_type = self.current_token()[0]
         if token_type == "OPENCURLYBRACKET":
-            self.eat(OPENCURLYBRACKET)
+            self.eat('OPENCURLYBRACKET')
             if self.current_token()[0] == "CLOSEDCURLYBRACKET":
-                self.eat(CLOSEDCURLYBRACKET)
+                self.eat('CLOSEDCURLYBRACKET')
                 return ObjectNode()
             else:
                 obj = ObjectNode(self.a())
-                self.eat(CLOSEDCURLYBRACKET)
+                self.eat('CLOSEDCURLYBRACKET')
                 return obj
         elif token_type == "OPENSQUAREBRACKET":
-            self.eat(OPENSQUAREBRACKET)
+            self.eat('OPENSQUAREBRACKET')
             if self.current_token()[0] == "CLOSEDSQUAREBRACKET":
-                self.eat(CLOSEDSQUAREBRACKET)
+                self.eat('CLOSEDSQUAREBRACKET')
                 return ArrayNode()
             else:
                 arr = ArrayNode(self.d())
@@ -134,7 +138,8 @@ class JSONParser:
                         self.message = "Invalid next token in sequence: " + str(self.current_token()[1]) + "\n" + \
                             "Expected CLOSEDSQUAREBRACKET, but found " + self.current_token()[0] + "\n" \
                             "The given input is not a valid JSON file."
-                self.eat(CLOSEDSQUAREBRACKET)
+                        
+                self.eat('CLOSEDSQUAREBRACKET')
                 return arr
         else:
             if self.message == "":
@@ -146,7 +151,7 @@ class JSONParser:
         """A → <STRING>:B | <STRING>:B, A"""
         pairs = [self.pair()]
         while self.current_token()[0] == "SEPARATOR":
-            self.eat(SEPARATOR)
+            self.eat('SEPARATOR')
             if self.current_token()[0] != "STRING":
                 if self.message == "":
                     self.message = "Invalid next token in sequence: " + str(self.current_token()[1]) + "\n" + \
@@ -163,19 +168,19 @@ class JSONParser:
 
     def pair(self):
         """<STRING>:B"""
-        if self.current_token()[0] != STRING:
+        if self.current_token()[0] != 'STRING':
             if self.message == "":
                 self.message = "Invalid next token in sequence: " + str(self.current_token()[1]) + "\n" + \
                     "Expected STRING, but found " + self.current_token()[0] + "\n" + \
                     "The given input is not a valid JSON file."
         key = self.current_token()[1]  # Assuming the token is (STRING, value)
-        self.eat(STRING)
-        if self.current_token()[0] != OPERATOR:
+        self.eat('STRING')
+        if self.current_token()[0] != 'OPERATOR':
             if self.message == "":
                 self.message = "Invalid next token in sequence: " + str(self.current_token()[1]) + "\n" + \
                     "Expected OPERATOR, but found " + self.current_token()[0] + "\n" + \
                     "The given input is not a valid JSON file."
-        self.eat(OPERATOR)
+        self.eat('OPERATOR')
         value = self.b()
         return PairNode(key, value)
 
@@ -186,19 +191,19 @@ class JSONParser:
             return self.s()
         elif token_type == "STRING":
             value = self.current_token()[1]
-            self.eat(STRING)
-            return ValueNode(value, STRING)
+            self.eat('STRING')
+            return ValueNode(value, 'STRING')
         elif token_type == "NUMBER":
             value = self.current_token()[1]
-            self.eat(NUMBER)
-            return ValueNode(value, NUMBER)
+            self.eat('NUMBER')
+            return ValueNode(value, 'NUMBER')
         elif token_type == "BOOLEAN":
             value = self.current_token()[1]
-            self.eat(BOOLEAN)
-            return ValueNode(value, BOOLEAN)
+            self.eat('BOOLEAN')
+            return ValueNode(value, 'BOOLEAN')
         elif token_type == "NULL":
-            self.eat(NULL)
-            return ValueNode("null", NULL)
+            self.eat('NULL')
+            return ValueNode("null", 'NULL')
         else:
             if self.message == "":
                 self.message = "Invalid next token in sequence: " + str(self.current_token()[1]) + "\n" + \
@@ -210,9 +215,15 @@ class JSONParser:
         """C → B,C | B"""
         elements = [self.b()]
         while self.current_token()[0] == "SEPARATOR":
-            self.eat(SEPARATOR)
+            self.eat('SEPARATOR')
             elements.append(self.b())
         return elements
+    
+    def fail(self, print_output=True):
+        if self.message != "":
+            if print_output:
+                print(self.message)
+            return self.message
 
 
 if __name__ == "__main__":
