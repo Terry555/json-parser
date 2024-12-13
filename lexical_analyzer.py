@@ -16,8 +16,8 @@ def tokenize(input_string, print_output=True):
                 while string[i] != char:
                     word = word + string[i]
                     if string[i] == "\\":
-                        if string[i+1] == "\\" or string[i+1] == '"':
-                            word = word + string[i] + string[i+1]
+                        if string[i+1] in '\\"nrtfb/':
+                            word = word + string[i+1]
                             if i + 2 < len(string):
                                 i += 2
                                 continue
