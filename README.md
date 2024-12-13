@@ -16,7 +16,7 @@ This is designed to take JSON files and parse them into tokens.
 
 ## Features
 
-- This is the beginning stages of what will be a JSON parser. As of now, the files "lexical_analyzer.py" and "syntactic_analyzer.py" accept any number of .json files as arguments, and will tokenize each file. The "lexical_analyzer.py" file will output each token according to the categories below, if all tokens are found to be valid. If it encounters an invalid token, it will display the sequence of characters that was unrecognized. The "syntactic_analyzer.py" file will output the proper Abstract Syntax Tree (AST) if a set of valid tokens is recognized by the grammar below. Otherwise, it will not produce an AST and instead display the token on which it halted and which token(s) it was expecting.
+- This is the beginning stages of what will be a JSON parser. As of now, the files "lexical_analyzer.py" and "syntactic_analyzer.py" accept any number of .json files as arguments, and will tokenize each file. The "lexical_analyzer.py" file will output each token according to the categories below, if all tokens are found to be valid. If it encounters an invalid token, it will display the sequence of characters that was unrecognized. The "syntactic_analyzer.py" file will output the proper Abstract Syntax Tree (AST) if a set of valid tokens is recognized by the grammar below. Otherwise, it will not produce an AST and instead display the token on which it halted and which token(s) it was expecting. 
 
 ## Token Types
 
