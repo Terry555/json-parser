@@ -66,7 +66,7 @@ class ValueNode():
             symbol = "├──"
         print(f"{indent}{symbol} \"{self.value}\"")
 
-OPENCURLYBRACKET = 'OPENCURLYBRACKET'
+'''OPENCURLYBRACKET = 'OPENCURLYBRACKET'
 CLOSEDCURLYBRACKET = 'CLOSEDCURLYBRACKET'
 OPENSQUAREBRACKET = 'OPENSQUAREBRACKET'
 CLOSEDSQUAREBRACKET = 'CLOSEDSQUAREBRACKET'
@@ -75,7 +75,8 @@ NUMBER = 'NUMBER'
 BOOLEAN = 'BOOLEAN'
 NULL = 'NULL'
 OPERATOR = 'OPERATOR'
-SEPARATOR = 'SEPARATOR'
+SEPARATOR = 'SEPARATOR'''
+# Constant propagation
 
 class JSONParser:
     def __init__(self, tokens):
@@ -218,12 +219,6 @@ class JSONParser:
             self.eat('SEPARATOR')
             elements.append(self.b())
         return elements
-    
-    def fail(self, print_output=True):
-        if self.message != "":
-            if print_output:
-                print(self.message)
-            return self.message
 
 
 if __name__ == "__main__":

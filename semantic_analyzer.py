@@ -41,7 +41,6 @@ def assign_meaning(node):
             while "\\\\" in value:
                 value = value.replace("\\\\", "\\")
             return value'''
-            # Copy propagation
             return assign_meaning(node.value)
         
     if type(node) == str:
