@@ -25,7 +25,7 @@ def assign_meaning(node):
                 return float(node.value)
             return int(node.value)
         if node.type == "STRING":
-            value = node.value
+            '''value = node.value
             if '\\"' in value:
                 value = value.replace('\\"', '"')
             if '\\n' in value:
@@ -40,7 +40,8 @@ def assign_meaning(node):
                 value = value.replace('\\b', '\b')
             while "\\\\" in value:
                 value = value.replace("\\\\", "\\")
-            return value
+            return value'''
+            return assign_meaning(node.value)
         
     if type(node) == str:
         value = node
